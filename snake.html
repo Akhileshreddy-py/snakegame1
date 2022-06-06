@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<style>
+  #canvas
+  {
+   background-color:black;
+  }
+</style>
+</head>
+<body>
+<input type="text" name="" id="" value="" />
+<h1>score : <span id="sc"> 0 </span></score>
+<canvas width="300px" height="300px" style="border:2px solid green;" id="canvas"> </canvas>
+
+<script type="text/javascript">
+count=0;
+var sc=document.getElementById("sc");
+var canvas=document.getElementById("canvas");
+ctx=canvas.getContext("2d");
+let length=4;
+let snake=[];
+let dir="right";
+ ctx.fillStyle="#ff0000";
+let raX=Math.floor(Math.random() * 30);
+let raY=Math.floor(Math.random() * 30);
+ctx.fillRect(raX*10,raY*10,10,10);
+
+
+for(let i=0;i<length;i++)
+{
+snake[i]={x:length-i-1,y:0};
+}
+//alert(snake);
+console.log(snake);
+
+function draw()
+{length=snake.length;
+  for(i=0;i<length;i++)
+  {
+  ctx.fillStyle="#ffffff";
+  ctx.fillRect(10*snake[i].x,10*snake[i].y,10,10);
+  ctx.strokeRect(10*snake[i].x,10*snake[i].y,10,10);
+  }
+}
+draw();
+function direction(e)
+{
+switch(e.key)
+{
+  case "ArrowUp":
+    dir="up";
+    break;
+  case "ArrowDown":
+    dir="down";
+    break;
+  case "ArrowLeft":
+  dir="left";
+  break;
+  case "ArrowRight":
+  dir="right";
+  break;
+  default:
+  console.log("wrong key enter");
+}
+}
+
+function move()
+{
+    //snake head
+  let  snakeX=snake[0].x;
+  let snakeY=snake[0].y;
+  
+
+ // snakeX+=1;
+    //console.log("snakex",snakeX);
+//    console.log("length ",length)
+switch(dir)
+{
+  case "up":
+    snakeY=snakeY-1;
+    break;
+  case "right":
+    snakeX=snakeX+1;
+    break;
+  case "left":
+    snakeX=snakeX-1;
+    break;
+  case "down":
+    snakeY=snakeY+1;
+    break;
+  default:
+  console.log('ok');
+}
+snake.unshift({x:snakeX,y:snakeY});
+    r=snake.pop();
+    //console.log(r);
+    ctx.clearRect(10*r.x,10*r.y,10,10);
+    draw()
+  
+  if(raX==snakeX && raY==snakeY)
+  { count++;
+  sc.innerText=count;
+    snake.push({x:snakeX,y:snakeY});
+    ctx.clearRect(10*snakeX,10*snakeY,10,10);
+    draw();
+ctx.fillStyle="#ff0000";
+raX=Math.floor(Math.random() * 30);
+raY=Math.floor(Math.random() * 30);
+ctx.fillRect(raX*10,raY*10,10,10);
+  }
+  
+  
+    
+    
+    
+    
+  if(snakeX==30 || snakeY==30 || snakeX==-1 || snakeY==-1)
+  {
+    alert("stop");
+  }
+   
+   // console.log(snakeX);
+}
+setInterval(move,300);
+document.body.addEventListener("keydown",direction)
+</script>
+
+</body>
+</html>
